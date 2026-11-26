@@ -334,7 +334,7 @@ export const App: React.FC = () => {
     }
     try {
       const [{ signOut }, { auth }] = await Promise.all([
-        import('firebase/auth'),
+        import('@firebase/auth'),
         import('./lib/firebase.ts'),
       ]);
       await signOut(auth);

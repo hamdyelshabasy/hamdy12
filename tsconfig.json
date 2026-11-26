@@ -14,8 +14,8 @@
     "skipLibCheck": true,
     "declaration": false,
     "forceConsistentCasingInFileNames": true,
-    "sourceMap": true,
-    "importHelpers": true,
+    "sourceMap": false,
+    "importHelpers": false,
     "experimentalDecorators": true,
     "useDefineForClassFields": false,
     "types": ["node"]

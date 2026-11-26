@@ -272,7 +272,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
     setLoading(true);
     try {
       const [{ signInWithPopup }, { auth, googleAuthProvider }] = await Promise.all([
-        import('firebase/auth'),
+        import('@firebase/auth'),
         import('../lib/firebase.ts'),
       ]);
       const result = await signInWithPopup(auth, googleAuthProvider);
@@ -290,7 +290,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
     } catch (err) {
       try {
         const [{ signOut }, { auth }] = await Promise.all([
-          import('firebase/auth'),
+          import('@firebase/auth'),
           import('../lib/firebase.ts'),
         ]);
         await signOut(auth);
