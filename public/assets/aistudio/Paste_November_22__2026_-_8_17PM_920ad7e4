@@ -1,0 +1,1266 @@
+# PHYSICS LMS — SMART EXAM GENERATOR & COMPLETE USER EXPERIENCE UPGRADE
+
+## MASTER IMPLEMENTATION PROMPT
+### Safe, Phased Enhancement of the Existing Physics Learning Management Platform
+
+You are acting as a senior full-stack engineer, software architect, educational product designer, database architect, security engineer, and QA specialist.
+
+I want to make my EXISTING Physics LMS significantly more powerful, efficient, intuitive, and comfortable for daily use by teachers, assistants, and students.
+
+The platform already has working systems for student management, academic tracks, video lessons, courses, subscriptions, exams, homework, a centralized question bank, teaching assistants, role-based permissions, and grading.
+
+**Your responsibility is to ENHANCE these existing systems, NOT rebuild or replace them.**
+
+The requested upgrade consists of SEVEN major features:
+
+1. Intelligent Automatic Exam Generator.
+2. Smart Teacher Dashboard.
+3. Simplified Exam and Homework Creation Wizards.
+4. In-Platform Notification Center.
+5. Unified Academic Calendar.
+6. Comprehensive Student Performance Profile.
+7. Global Search and Quick Actions.
+
+Implement them using a controlled, incremental plan.
+
+---
+
+# PART 1 — ABSOLUTE PROJECT SAFETY RULES
+
+These rules are mandatory and override every other instruction.
+
+1. NEVER rebuild the platform from scratch.
+2. NEVER remove or replace any stable existing functionality.
+3. NEVER reset, truncate, or reseed the production or existing development database.
+4. NEVER delete or overwrite real students, courses, subscriptions, payments, activation codes, exams, assignments, submissions, results, or grades.
+5. NEVER change existing grading logic without a narrowly scoped, tested compatibility requirement.
+6. NEVER modify existing published examinations or submitted homework retrospectively.
+7. NEVER change video playback, YouTube integration, seeking, or student viewing progress.
+8. NEVER interfere with Google Drive lesson PDF attachments.
+9. NEVER alter the existing question bank's upload, approval, image storage, or model-answer visibility behavior.
+10. NEVER remove or disable existing development demo accounts or demo login buttons.
+11. NEVER modify the Super Admin account or existing staff management workflows.
+12. NEVER weaken RBAC or device-blocking protections.
+13. NEVER change CODE_PEPPER, signing secrets, payment credentials, or Cloud Run configuration as part of this feature work.
+14. NEVER publish, deploy, or redeploy automatically.
+15. NEVER enable paid APIs or additional paid infrastructure without my explicit approval.
+16. NEVER introduce unrelated refactoring or redesign.
+17. NEVER mark a feature complete without executing its relevant tests.
+18. NEVER claim real production deployment succeeded unless it was explicitly authorized and verified.
+19. NEVER expose unpublished grades, private answers, or confidential student information.
+20. NEVER make database migrations destructive or incompatible with existing application records.
+
+Preserve the existing login experience and demo buttons during development.
+
+The presence of public demo Super Admin access is a separate security risk that must be documented before unrestricted public launch; do not silently change it during this enhancement.
+
+If the project has unfinished deployment configuration, do not modify it or allow it to block safe local feature development.
+
+---
+
+# PART 2 — REQUIRED EXISTING-SYSTEM AUDIT
+
+Before making any changes, perform a thorough READ-ONLY analysis of the current implementation.
+
+Inspect the real codebase and identify:
+
+### Existing academic systems
+
+- Baccalaureate and Al-Azhar tracks.
+- Grades, units, and lessons.
+- Current teacher dashboard.
+- Student dashboard.
+- Existing exams and questions.
+- Current examination builder and editing workflow.
+- Existing question bank, approval statuses, images, and correct answers.
+- Existing exam publication, timing, attempts, grading, and results.
+- Existing homework creation and targeting.
+- Homework uploads, submissions, resubmissions, and grading.
+- Model-answer release policies.
+- Existing student profiles and academic statistics.
+- Video viewing and progress-tracking data.
+
+### Existing technical systems
+
+- Database schema and relationships.
+- Server API routes.
+- Frontend routing and components.
+- Existing RBAC permissions and role definitions.
+- Staff management.
+- Existing notification or event infrastructure.
+- Current search functionality.
+- Existing calendar/date utilities.
+- Caching and pagination patterns.
+- Current testing framework.
+- Backup and migration procedures.
+
+Check whether any requested feature already partially exists.
+
+Do NOT create duplicate modules or competing implementations unnecessarily.
+
+Provide a clear initial report showing:
+
+1. Existing functionality that can be reused.
+2. Features that are missing.
+3. Database changes, if necessary.
+4. Affected screens and APIs.
+5. Data-integrity risks.
+6. RBAC implications.
+7. Implementation phases.
+8. Rollback and testing strategy.
+
+Use the existing application's design system and coding conventions.
+
+---
+
+# FEATURE 1 — INTELLIGENT AUTOMATIC EXAM GENERATOR
+
+## Objective
+
+Allow the teacher to generate a complete exam draft automatically using APPROVED questions from the EXISTING centralized question bank.
+
+The teacher should not need to manually pick every question.
+
+Add an accessible action inside the current exam management interface:
+
+**"إنشاء امتحان ذكي"**
+
+Keep the existing manual exam creation method fully functional.
+
+## 1.1 Exam Blueprint Configuration
+
+The teacher should be able to configure:
+
+- Academic track.
+- Grade.
+- Selected units.
+- Selected lessons.
+- Optional question collections, if implemented.
+- Total number of questions.
+- Total exam score.
+- Exam duration.
+- Question types.
+- Difficulty distribution.
+- Optional question-specific scores.
+- Optional percentage distribution across units.
+- Previously used question exclusion.
+- Optional exam title.
+
+Example:
+
+Create an exam containing 30 questions:
+
+- 10 easy.
+- 15 medium.
+- 5 difficult.
+
+Academic coverage:
+
+- Unit 1: 40%.
+- Unit 2: 35%.
+- Unit 3: 25%.
+
+Allow the teacher to choose exact question counts or percentages.
+
+Validate that percentages and counts are mathematically consistent.
+
+Make the interface understandable in Arabic rather than exposing technical calculations.
+
+## 1.2 Smart Question Selection
+
+The generator must:
+
+1. Use approved questions only.
+2. Respect selected academic tracks and grades.
+3. Respect unit and lesson constraints.
+4. Respect difficulty requirements.
+5. Respect question-type requirements.
+6. Avoid duplicate question IDs in the generated exam.
+7. Optionally avoid previously used questions.
+8. Preserve correct answers and grading compatibility.
+9. Never select archived or pending-review questions.
+10. Never select unauthorized or incompatible academic content.
+
+Use a constraint-based selection algorithm.
+
+The initial generator must NOT require an external AI API.
+
+"Smart" means intelligent selection, validation, balancing, filtering, and replacement using the actual question bank.
+
+Never invent new physics questions merely to satisfy missing requirements.
+
+If the bank contains insufficient eligible questions, show an understandable explanation.
+
+Example:
+
+"المتاح 7 أسئلة صعبة فقط، بينما المطلوب 10."
+
+Offer safe adjustments such as reducing the required count, relaxing optional exclusions, or selecting additional units.
+
+Never silently weaken mandatory academic constraints.
+
+## 1.3 Exam Preview Before Saving
+
+After generating the exam, display a complete preview containing:
+
+- Every selected question.
+- Question images.
+- Question order.
+- Difficulty.
+- Academic unit.
+- Individual grade.
+- Total grade.
+- Expected duration.
+- Summary of question distribution.
+
+Provide actions:
+
+- "استبدال السؤال"
+- "إعادة توليد الامتحان"
+- "تغيير ترتيب الأسئلة"
+- "تعديل درجة السؤال"
+- "حذف السؤال من الامتحان"
+- "إضافة سؤال يدويًا"
+- "حفظ كمسودة"
+
+When replacing one question, preserve the rest of the exam unless the teacher explicitly regenerates the complete draft.
+
+Show a confirmation before discarding manual modifications during full regeneration.
+
+## 1.4 Question Replacement
+
+Allow the teacher to click:
+
+"استبدال"
+
+The system should propose alternatives matching the original question's:
+
+- Track.
+- Grade.
+- Unit or lesson.
+- Question type.
+- Difficulty, where possible.
+- Score requirements.
+
+Explain any unavailable matching alternatives.
+
+Do not duplicate questions already selected in the same draft.
+
+## 1.5 Exam Variants — A / B / C
+
+As an extension of this generator, plan support for:
+
+- نموذج A
+- نموذج B
+- نموذج C
+
+Support two modes where the existing architecture can safely accommodate them:
+
+MODE A: Same questions with different order.
+
+MODE B: Different questions with comparable academic distributions.
+
+Requirements:
+
+- Comparable blueprint coverage.
+- Correct grading for each student variant.
+- Correct answer-key mapping.
+- No accidental swapping of correct choices.
+- Stable assigned variant during an existing attempt.
+- No modification of previous attempts.
+- Teacher preview of every variant.
+- No automatic publication.
+
+If variant-specific student grading requires structural changes, implement it as a separate tested sub-milestone.
+
+Do not describe variant support as complete until attempts and grading have been tested end to end.
+
+## 1.6 Compatibility With Existing Exams
+
+Generated exams must be stored using the EXISTING exam infrastructure.
+
+Preserve:
+
+- Automatic objective grading.
+- Manual written-question grading.
+- Exam access rules.
+- Attempts.
+- Timers.
+- Question ordering.
+- Student navigation.
+- Result publication controls.
+- Correct-answer visibility.
+- Academic reporting.
+
+Reuse the existing question-bank snapshot/versioning mechanism.
+
+Do not build a separate examination engine.
+
+---
+
+# FEATURE 2 — SMART TEACHER DASHBOARD
+
+## Objective
+
+Redesign or enhance ONLY the teacher's main dashboard experience.
+
+The teacher should immediately understand what requires attention.
+
+Do not replace existing management pages.
+
+Add a useful operational overview.
+
+## 2.1 Main Summary Cards
+
+Show live, permission-authorized metrics for:
+
+1. Students awaiting approval.
+2. Homework submissions awaiting grading.
+3. Submitted exam answers awaiting manual grading.
+4. Questions awaiting question-bank approval.
+5. Draft exams.
+6. Upcoming scheduled exams.
+7. Upcoming homework deadlines.
+8. Newly registered students.
+9. Recently published grades or results, where appropriate.
+10. Relevant outstanding administrative actions.
+
+Do not invent numbers.
+
+All cards must derive from real backend data and use consistent definitions.
+
+Do not mix unpublished, published, overdue, and draft records incorrectly.
+
+## 2.2 Actionable Dashboard
+
+Every relevant card must be clickable.
+
+Examples:
+
+Clicking "8 واجبات تحتاج تصحيح" opens the existing homework grading interface filtered to those eight submissions.
+
+Clicking "12 سؤال بانتظار الاعتماد" opens the existing question-bank review queue.
+
+Clicking "5 طلاب بانتظار الموافقة" opens the existing student approval screen.
+
+Do not create duplicate student approval or grading interfaces.
+
+## 2.3 Priority-Based Task List
+
+Add:
+
+"مهام تحتاج تدخلك"
+
+Organize actionable items by:
+
+- Urgent.
+- Upcoming.
+- Normal.
+
+Possible items:
+
+- Homework overdue for grading.
+- Question-bank review requests.
+- Pending student registrations.
+- Exams requiring review before scheduled publication.
+
+Use explicit transparent business rules for priority.
+
+Allow the teacher to navigate directly to the underlying action.
+
+## 2.4 Role-Aware Dashboard
+
+SUPER_ADMIN sees full authorized administrative information.
+
+TEACHING_ASSISTANT sees only assigned and authorized tasks.
+
+CONTENT_MANAGER sees only content-related tasks and data allowed by RBAC.
+
+SUPPORT sees only its allowed functions.
+
+Never reveal private financial or student information merely because a dashboard card exists.
+
+Provide appropriate empty states and loading/error states.
+
+Do not repeatedly issue heavy database queries when the dashboard refreshes.
+
+---
+
+# FEATURE 3 — SIMPLIFIED EXAM AND HOMEWORK WIZARDS
+
+## Objective
+
+Make creating exams and homework much faster, clearer, and less confusing.
+
+Keep the existing editors and underlying workflows intact.
+
+Add an optional step-by-step interface.
+
+## 3.1 Exam Creation Wizard
+
+Provide a clear multi-step wizard:
+
+STEP 1 — Academic Scope
+
+"الصف والمادة والمحتوى"
+
+Select academic track, grade, units, and lessons.
+
+STEP 2 — Exam Questions
+
+"اختيار الأسئلة"
+
+Options:
+
+- Add from question bank.
+- Generate automatically.
+- Create manually using the existing editor.
+
+STEP 3 — Settings
+
+"إعدادات الامتحان"
+
+Configure existing supported fields such as duration, total score, availability, eligible students, and attempts.
+
+STEP 4 — Preview
+
+"معاينة الامتحان"
+
+Preview the student-facing exam, question order, scores, and relevant settings.
+
+STEP 5 — Save or Publish
+
+"حفظ المسودة" / "نشر الامتحان"
+
+Publication requires explicit authorized confirmation.
+
+Do not publish automatically.
+
+## 3.2 Homework Creation Wizard
+
+Use a similar workflow:
+
+STEP 1 — Select students, group, or grade using existing targeting rules.
+
+STEP 2 — Add questions from the bank or using the existing manual homework method.
+
+STEP 3 — Configure scores, instructions, submission options, and deadlines.
+
+STEP 4 — Preview homework as students will see it.
+
+STEP 5 — Save draft or explicitly publish.
+
+Preserve existing homework image/PDF submissions, question-by-question grading, resubmissions, and answer-release options.
+
+## 3.3 Automatic Draft Saving
+
+Introduce robust draft autosaving for the new wizards.
+
+Requirements:
+
+- Save incomplete drafts without publishing.
+- Show draft save status.
+- Debounce frequent changes.
+- Recover an interrupted editing session.
+- Prevent losing unsaved changes.
+- Validate required fields before publishing.
+- Prevent accidental duplicate exam/homework creation.
+- Avoid overwriting newer changes made in another tab.
+- Apply version or optimistic-concurrency checks where appropriate.
+- Provide clear retry behavior after save failures.
+
+Draft saving must not change the content of already published exams or homework.
+
+Do not use student submissions or live assignment records as autosave scratch space.
+
+## 3.4 User Experience
+
+Provide:
+
+- Clear progress indicator.
+- Back and Next buttons.
+- Inline field validation.
+- Mobile-friendly layout.
+- Responsive RTL design.
+- Clear error messages in Arabic.
+- Confirmation before discarding a draft.
+- Minimal repeated data entry.
+
+Avoid replacing familiar stable screens unless absolutely necessary.
+
+---
+
+# FEATURE 4 — IN-PLATFORM NOTIFICATION CENTER
+
+## Objective
+
+Add a centralized notification center for teachers, assistants, and students.
+
+The initial version should be fully internal to the platform.
+
+Do not require email, SMS, WhatsApp, or paid push-notification services.
+
+## 4.1 Teacher Notifications
+
+Examples:
+
+- A student submitted homework.
+- A homework submission requires grading.
+- A question-bank contribution awaits approval.
+- A new student registration awaits approval.
+- An important examination task requires attention.
+
+## 4.2 Teaching Assistant Notifications
+
+Examples:
+
+- A submitted question was returned for correction.
+- A question was approved.
+- A task relevant to the assistant's authorized role requires attention.
+
+Do not reveal unrelated teacher or student records.
+
+## 4.3 Student Notifications
+
+Examples:
+
+- A new homework assignment was published.
+- A new exam became available.
+- A homework deadline is approaching.
+- A homework grade has been published.
+- An exam result has officially been released.
+
+Never notify students about grades or answer keys that remain unpublished.
+
+## 4.4 Notification UI
+
+Add a notification bell with an unread count.
+
+Provide:
+
+- Read/unread status.
+- Notification list.
+- Related event date/time.
+- Clickable navigation to the relevant page.
+- Mark as read.
+- Mark all as read.
+- Pagination.
+- Appropriate empty states.
+
+Use existing platform visual styling.
+
+## 4.5 Backend Requirements
+
+Use durable persisted notifications.
+
+Implement event-based generation.
+
+Prevent duplicate notifications from retries and repeated requests.
+
+Consider idempotency keys or unique event identifiers.
+
+Never create sensitive notifications before the underlying database action has been successfully committed.
+
+Respect account status, permissions, and publication rules.
+
+Prevent students from reading other users' notifications.
+
+Use a sensible retention strategy.
+
+Do not add expensive polling or an unnecessary real-time infrastructure service.
+
+---
+
+# FEATURE 5 — UNIFIED ACADEMIC CALENDAR
+
+## Objective
+
+Create a unified calendar containing relevant scheduled exams and homework deadlines.
+
+Add:
+
+"التقويم الدراسي"
+
+## 5.1 Calendar Views
+
+Provide:
+
+- Monthly view.
+- Weekly view.
+- Agenda/list view.
+
+Show:
+
+- Exam availability dates.
+- Exam deadlines, where applicable.
+- Homework due dates.
+- Relevant scheduled academic tasks.
+
+Use distinct, consistent visual indicators for event types.
+
+## 5.2 Event Details
+
+Clicking a calendar event should show:
+
+- Event title.
+- Exam or homework type.
+- Relevant academic track and grade.
+- Start or due date.
+- Publication/availability status.
+- Authorized action to open the existing management page.
+
+## 5.3 Editing
+
+Authorized teachers may adjust deadlines or schedules through the existing supported exam/homework update logic.
+
+Do not bypass validation, publication restrictions, or student-submission protections.
+
+When a schedule changes, preserve associated submissions and grading records.
+
+If a schedule cannot safely be edited due to an active exam or existing submissions, explain the restriction.
+
+## 5.4 Student View
+
+Students see only their eligible and published academic events.
+
+Do not show unpublished teacher drafts.
+
+## 5.5 Timezone and Date Accuracy
+
+Use a consistent timezone-aware approach.
+
+For the Egyptian platform experience, present dates and times using Africa/Cairo unless existing user-specific timezone handling requires otherwise.
+
+Handle daylight-saving transitions correctly.
+
+Never silently change existing stored dates because of timezone display changes.
+
+Avoid creating duplicate calendar event records when existing exams or homework already represent the event.
+
+---
+
+# FEATURE 6 — COMPREHENSIVE STUDENT PERFORMANCE PROFILE
+
+## Objective
+
+Extend the EXISTING student profile with one clear academic performance overview.
+
+Do not create a second independent student record.
+
+Add a section:
+
+"الملف الأكاديمي والأداء"
+
+## 6.1 Student Summary
+
+Display real available data such as:
+
+- Student academic track and grade.
+- Total assigned exams.
+- Completed exams.
+- Published exam scores.
+- Assigned homework.
+- Submitted homework.
+- Missing or overdue homework.
+- Published homework grades.
+- Lesson viewing progress.
+- Recent academic activity.
+
+Never invent unavailable statistics.
+
+## 6.2 Performance Trends
+
+Add useful charts for:
+
+- Exam performance over time.
+- Homework performance over time.
+- Completion rates.
+- Unit-level academic performance where the underlying question metadata supports it.
+
+Use actual graded records.
+
+Exclude unpublished results from student-facing views.
+
+Clearly distinguish:
+
+- Not submitted.
+- Submitted but not graded.
+- Graded but not published.
+- Published and available.
+
+Do not treat ungraded responses as failures.
+
+## 6.3 Strengths and Weaknesses
+
+Where question tags, lessons, units, and sufficient graded attempts exist, provide:
+
+"نقاط القوة"
+
+"نقاط تحتاج تحسين"
+
+Calculate these from transparent performance rules.
+
+Avoid pretending to know a student's understanding when the data is insufficient.
+
+Do not use external AI profiling services.
+
+If an insight has low supporting evidence, display that limitation instead of presenting a confident conclusion.
+
+## 6.4 Lesson Viewing Progress
+
+Reuse the existing video progress data.
+
+Show completed, partially watched, and unstarted lessons according to existing definitions.
+
+Do not change playback tracking or anti-abuse protections.
+
+Do not misrepresent merely opening a lesson as fully watching it.
+
+## 6.5 Teacher Actions
+
+Allow authorized staff to navigate from the performance profile directly to:
+
+- The student's existing exam history.
+- Homework history.
+- Existing student management controls.
+- Relevant academic lessons or tasks.
+
+Do not duplicate existing grading or account-management tools.
+
+## 6.6 Privacy and Permissions
+
+Students can only access their own academic profile.
+
+Staff access must follow current RBAC and student-data scope.
+
+Protect private student information through backend checks.
+
+Never expose results before the official publication rules permit them.
+
+Avoid public profile links that could reveal academic data.
+
+---
+
+# FEATURE 7 — GLOBAL SEARCH AND QUICK ACTIONS
+
+## Objective
+
+Add a fast, convenient global search experience for authorized staff.
+
+Provide a clearly visible search control inside the dashboard header.
+
+Suggested placeholder:
+
+"ابحث عن طالب، سؤال، امتحان، واجب..."
+
+## 7.1 Searchable Entities
+
+Search across existing permitted records:
+
+- Students by name or permitted identifier.
+- Questions by question-bank code.
+- Questions by searchable text.
+- Exams by title.
+- Homework by title.
+- Courses by title.
+- Lessons where useful.
+- Approved question collections, if present.
+
+Use existing data sources.
+
+Do not build unnecessary duplicate indexes or external search infrastructure for small data volumes.
+
+## 7.2 Search Experience
+
+Provide:
+
+- Debounced search.
+- Grouped result categories.
+- Keyboard navigation.
+- Clear result labels.
+- Recent searches only if privacy-safe.
+- Fast links to existing detail pages.
+- Meaningful empty states.
+
+Results must be permission-filtered on the backend BEFORE they are returned.
+
+Search must never reveal hidden exam answers, unpublished student results, confidential contact details, or staff-only records to unauthorized users.
+
+Implement sensible request limits and server-side pagination.
+
+## 7.3 Quick Actions
+
+Provide a compact quick-actions section.
+
+Examples:
+
+- "إنشاء امتحان"
+- "إنشاء امتحان ذكي"
+- "إنشاء واجب"
+- "إضافة سؤال لبنك الأسئلة"
+- "مراجعة الأسئلة المعلقة"
+- "مراجعة الواجبات"
+- "مراجعة طلبات الطلاب"
+
+Show each action only if the user has permission.
+
+Quick actions must navigate to or invoke existing safe workflows.
+
+## 7.4 Duplicate Exam and Homework
+
+Allow authorized teachers to:
+
+"نسخ امتحان"
+
+"نسخ واجب"
+
+Copy the relevant academic content and editable settings into a NEW DRAFT.
+
+Do NOT copy:
+
+- Student submissions.
+- Exam attempts.
+- Student grades.
+- Published results.
+- Existing access tokens.
+- Private grading history.
+- Original publication status.
+
+The copy must receive a new identity.
+
+Allow the teacher to review and edit all copied settings before publication.
+
+Preserve question snapshots and source references appropriately.
+
+Never modify the original exam or homework when its copy is edited.
+
+---
+
+# PART 3 — UI/UX DESIGN PRINCIPLES
+
+The platform must become significantly easier to use without losing familiarity.
+
+Use:
+
+- Professional modern Arabic RTL layout.
+- Clear typography.
+- Consistent colors and components.
+- Compact but readable cards.
+- Clear call-to-action buttons.
+- Responsive design.
+- Mobile-friendly forms.
+- Helpful empty states.
+- Loading and saving indicators.
+- Clear success and error feedback.
+- Accessible keyboard interactions where appropriate.
+
+Prioritize meaningful usability improvements, not decorative animations.
+
+Avoid:
+
+- Overcrowded dashboards.
+- Deeply nested menus.
+- Unnecessary confirmation dialogs for harmless actions.
+- Repeated forms asking for already-known information.
+- Heavy animations.
+- Duplicate navigation systems.
+- Full redesigns of unrelated pages.
+
+Preserve all existing user-facing features and stable navigation routes.
+
+---
+
+# PART 4 — DATABASE AND ARCHITECTURE RULES
+
+Use the existing backend, database, session handling, and component structure.
+
+Prefer additive schema changes only.
+
+Before any database migration:
+
+1. Inspect the real schema.
+2. Verify how existing data is stored.
+3. Identify potentially affected foreign keys and indexes.
+4. Document a rollback procedure.
+5. Verify a usable recovery/backup approach exists.
+6. Test migrations safely in an isolated environment when available.
+7. Never use DROP, TRUNCATE, destructive data replacement, or blanket resets.
+
+If safe backup and rollback cannot be established for a risky migration, STOP and report the issue.
+
+Use stable identifiers and existing relationships.
+
+Maintain clear separation between:
+
+- Academic source data.
+- Draft content.
+- Published content.
+- Student attempts/submissions.
+- Grading outcomes.
+- Analytics.
+- Notifications.
+
+For all new queries, consider indexes, pagination, and efficient aggregation.
+
+Do not introduce unnecessary background jobs, polling, or paid external dependencies.
+
+Use existing auditing and logging conventions where relevant.
+
+---
+
+# PART 5 — STRICT PERMISSION AND SECURITY REQUIREMENTS
+
+Keep the existing RBAC structure intact.
+
+Use server-side authorization, not just hidden buttons.
+
+SUPER_ADMIN:
+
+Can access authorized global management tools.
+
+TEACHING_ASSISTANT:
+
+Can access delegated grading, student-approval, and question-bank contribution features as already permitted.
+
+Do not silently grant permission to publish exams or modify live assignments.
+
+CONTENT_MANAGER:
+
+Retains existing content-authoring permissions.
+
+Do not silently grant financial or staff-management privileges.
+
+SUPPORT:
+
+Retains only its currently authorized support operations.
+
+STUDENT:
+
+Can access only their own eligible academic tasks, grades, notifications, calendar events, and performance data.
+
+Never expose private model answers or unpublished exam results through new dashboards, APIs, notifications, or search results.
+
+Never introduce HTML injection vulnerabilities through previews, exports, notifications, or search highlights.
+
+Do not modify existing authentication secrets.
+
+---
+
+# PART 6 — IMPLEMENTATION ROADMAP
+
+This is a multi-phase engineering project.
+
+Do NOT attempt to build all seven features in one uninterrupted implementation.
+
+The platform previously experienced an interrupted AI coding session due to token limits. Avoid repeating that problem.
+
+Each phase must be independently verifiable, with an explicit completion report.
+
+## PHASE 0 — INSPECTION AND IMPLEMENTATION PLAN
+
+Read-only audit of current architecture.
+
+Identify existing reusable components.
+
+Identify the minimal dependencies needed for the Smart Exam Generator.
+
+Provide a phase plan, compatibility assessment, and rollback strategy.
+
+## PHASE 1 — SMART EXAM GENERATOR
+
+Implement only:
+
+- Exam blueprint configuration.
+- Constraint-based automatic question selection.
+- Approved question bank integration.
+- Difficulty and unit distribution.
+- Insufficient-question handling.
+- Exam preview.
+- Replace individual questions.
+- Regenerate draft.
+- Save to existing exam system.
+- Correct grading and question snapshot compatibility.
+
+Exam variants A/B/C may be planned during this phase, but implement them only if they can be safely isolated and fully tested within the approved scope. Otherwise, reserve them for a separate generator extension.
+
+STOP after Phase 1 testing and reporting.
+
+## PHASE 2 — SMART TEACHER DASHBOARD
+
+Implement:
+
+- Operational summary cards.
+- Pending tasks.
+- Role-aware dashboard metrics.
+- Clickable links to existing actions.
+- Efficient backend statistics.
+
+STOP after testing.
+
+## PHASE 3 — EXAM AND HOMEWORK WIZARDS
+
+Implement:
+
+- Optional simplified exam wizard.
+- Optional simplified homework wizard.
+- Draft autosaving.
+- Step validation.
+- Student-facing preview.
+- Explicit save/publish actions.
+
+STOP after testing.
+
+## PHASE 4 — NOTIFICATION CENTER
+
+Implement:
+
+- Notification storage and event handling.
+- Teacher notifications.
+- Assistant notifications.
+- Student notifications.
+- Notification bell.
+- Read/unread controls.
+- Correct publication and privacy restrictions.
+
+STOP after testing.
+
+## PHASE 5 — UNIFIED ACADEMIC CALENDAR
+
+Implement:
+
+- Calendar UI.
+- Exam events.
+- Homework deadlines.
+- Role-aware event visibility.
+- Authorized schedule editing.
+- Timezone correctness.
+
+STOP after testing.
+
+## PHASE 6 — STUDENT PERFORMANCE PROFILE
+
+Implement:
+
+- Academic overview.
+- Exam and homework trends.
+- Lesson viewing progress.
+- Performance by unit.
+- Strengths/weaknesses based on available evidence.
+- Teacher and student authorization.
+
+STOP after testing.
+
+## PHASE 7 — GLOBAL SEARCH AND QUICK ACTIONS
+
+Implement:
+
+- Unified permission-aware search.
+- Grouped search results.
+- Fast navigation.
+- Quick actions.
+- Copy exam to new draft.
+- Copy homework to new draft.
+
+STOP after testing.
+
+---
+
+# PART 7 — MANDATORY REGRESSION TESTING
+
+After EVERY phase, test the new feature and ensure older systems still work.
+
+## Existing Platform Regression
+
+Verify:
+
+- Student registration.
+- Student approval/rejection.
+- Super Admin login.
+- Existing development demo login buttons.
+- Staff account creation and suspension.
+- Staff role permissions.
+- Device-blocking logic.
+- YouTube playback and seeking.
+- Viewing progress.
+- Google Drive PDF lesson attachments.
+- Course management.
+- Subscriptions and activation codes.
+- Payment-related functionality.
+- Existing exams.
+- Existing exam attempts and grading.
+- Existing homework.
+- Homework image/PDF submissions.
+- Question-by-question homework grading.
+- Question bank CRUD.
+- Bulk question upload.
+- Question approval.
+- Selection from question bank in exams.
+- Selection from question bank in homework.
+- Correct-answer visibility.
+- Published grade integrity.
+- TypeScript checking.
+- Production build.
+
+## Smart Generator Tests
+
+Specifically test:
+
+1. Generating an exam with sufficient questions.
+2. Insufficient question availability.
+3. Exact difficulty counts.
+4. Unit distribution.
+5. Mixed question types.
+6. Excluding unauthorized questions.
+7. Excluding archived and pending questions.
+8. Avoiding duplicate questions.
+9. Replacing one question without changing the others.
+10. Regenerating an exam draft.
+11. Exam-specific grades and total marks.
+12. Image-based questions.
+13. Objective automatic grading.
+14. Written/manual grading.
+15. Saving as an unpublished draft.
+16. Preserving previous examination attempts.
+17. Preventing answer leakage.
+18. Rejecting unauthorized exam generation.
+
+## Dashboard Tests
+
+- Correct metric calculations.
+- Correct task counts.
+- No cross-role data leaks.
+- Valid navigation.
+- Empty-state handling.
+
+## Wizard Tests
+
+- Draft recovery.
+- Autosave failures.
+- Duplicate submission prevention.
+- Validation.
+- Published-record protection.
+- Existing grading compatibility.
+
+## Notification Tests
+
+- Correct recipients.
+- No duplicate notifications.
+- Read/unread behavior.
+- No unpublished grade leakage.
+- Permission revocation handling.
+
+## Calendar Tests
+
+- Correct deadlines.
+- Role-aware visibility.
+- Date editing safeguards.
+- Timezone correctness.
+
+## Student Profile Tests
+
+- Accurate published grades.
+- No mixing ungraded and failed responses.
+- Correct video progress.
+- Student privacy.
+- Consistent historical statistics.
+
+## Search Tests
+
+- Search by student name.
+- Search by question code.
+- Search by exam/homework title.
+- Correct role restrictions.
+- No private answer leakage.
+- Safe pagination and input handling.
+
+Use isolated test fixtures.
+
+Do not modify real student exam attempts, submissions, or grades.
+
+Report which tests were actually run.
+
+Do not claim a test passed merely because the code looks correct.
+
+---
+
+# PART 8 — DEVELOPMENT CHECKPOINTS AND RECOVERY
+
+At the start of each phase:
+
+1. Inspect the existing implementation state.
+2. Identify incomplete changes from previous AI coding sessions.
+3. Do not duplicate features already implemented.
+4. Confirm prior tests are passing.
+5. Establish a clear, recoverable checkpoint.
+6. Make narrowly scoped changes.
+
+At the end:
+
+1. Verify the new feature.
+2. Run focused tests.
+3. Run appropriate regression tests.
+4. Check TypeScript and build.
+5. Summarize changed files.
+6. Record unfinished work.
+7. Explain how to test manually.
+8. STOP.
+
+If token limits interrupt execution, the next session must resume from the actual current codebase state rather than rerunning everything.
+
+Never start a new feature phase while earlier changes are broken or unverified.
+
+---
+
+# PART 9 — FINAL REPORT FORMAT
+
+After each phase, write a detailed report in Egyptian Arabic containing:
+
+1. اسم المرحلة المنفذة.
+2. تحليل الموجود قبل التعديل.
+3. ما تمت إضافته فعلًا.
+4. ما تمت إعادة استخدامه من الأنظمة الحالية.
+5. الملفات التي تم تعديلها.
+6. أي تعديلات على قاعدة البيانات.
+7. مسارات API المضافة أو المعدلة.
+8. تغييرات الصلاحيات.
+9. نتائج الاختبارات بالأعداد الفعلية.
+10. نتائج فحص الواجهة إن تم تنفيذه.
+11. طريقة الوصول للميزة الجديدة داخل لوحة التحكم.
+12. طريقة تجربتها بحساب المدير أو المساعد أو الطالب.
+13. المشاكل أو الحدود المتبقية.
+14. تأكيد عدم تعديل الأنظمة القديمة المستقرة.
+15. المرحلة التالية المقترحة.
+
+If any feature remains incomplete, state that clearly.
+
+Do not exaggerate completion.
+
+Do not silently perform later phases.
+
+---
+
+# FINAL EXECUTION INSTRUCTION
+
+For THIS CURRENT RUN:
+
+1. Perform PHASE 0: inspect the REAL existing project.
+2. Explain the actual architecture and implementation plan.
+3. If safe, implement PHASE 1: SMART EXAM GENERATOR only.
+4. Reuse the EXISTING approved question bank.
+5. Save generated exams through the EXISTING examination system.
+6. Preserve all previously stable functionality and historical data.
+7. Run relevant feature, integration, security, and regression tests.
+8. Provide a detailed Egyptian Arabic completion report.
+9. STOP.
+
+DO NOT start PHASE 2, 3, 4, 5, 6, or 7 without my explicit next instruction.
+
+DO NOT automatically deploy.
+
+DO NOT change Cloud Run security secrets.
+
+DO NOT change development demo accounts.
+
+The final product should enable a teacher to run the entire academic platform quickly and comfortably, while assistants and students retain their existing secure workflows.
+
+**BEGIN WITH PHASE 0 ANALYSIS, THEN IMPLEMENT PHASE 1 ONLY IF SAFE.**

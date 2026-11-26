@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: 'Cairo', 'Tajawal', sans-serif;
+    --font-body: 'Tajawal', 'Cairo', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  html {
+    font-family: var(--font-body);
+    scroll-behavior: smooth;
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  body {
+    background-color: #F7F9FC;
+    color: #0B162C;
+    margin: 0;
+    padding: 0;
+    overflow-x: clip;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  button, a, input, select, textarea {
+    touch-action: manipulation;
+  }
+
+  select {
+    max-width: 100%;
+  }
+
+  /* Prevent unwanted iOS Safari page auto-zoom when focusing form inputs on phones */
+  @media (max-width: 640px) {
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),
+    select,
+    textarea {
+      font-size: 16px;
+    }
+  }
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono-num {
+  font-family: 'IBM Plex Mono', var(--font-body);
+  font-variant-numeric: tabular-nums;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Smooth RTL math container */
+.math-ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-block;
+}
+
+/* Smooth 2D responsive table & schedule scroll viewport */
+.responsive-table-scroll,
+.responsive-table-scroll-dark {
+  overflow: auto;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+  scrollbar-width: thin;
+}
+
+.responsive-table-scroll {
+  scrollbar-color: rgba(148, 163, 184, 0.7) rgba(241, 245, 249, 0.7);
+}
+
+.responsive-table-scroll::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.responsive-table-scroll::-webkit-scrollbar-track {
+  background: rgba(241, 245, 249, 0.85);
+  border-radius: 9999px;
+}
+
+.responsive-table-scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.65);
+  border-radius: 9999px;
+}
+
+.responsive-table-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.85);
+}
+
+.responsive-table-scroll-dark {
+  scrollbar-color: rgba(56, 189, 248, 0.5) rgba(15, 23, 42, 0.55);
+}
+
+.responsive-table-scroll-dark::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.responsive-table-scroll-dark::-webkit-scrollbar-track {
+  background: rgba(11, 23, 57, 0.7);
+  border-radius: 9999px;
+}
+
+.responsive-table-scroll-dark::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.45);
+  border-radius: 9999px;
+}
+
+.responsive-table-scroll-dark::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.75);
+}
+
+/* Subtle compositor-only schedule table animations */
+@keyframes scheduleRowEnter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scheduleScrollNudgeRtl {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-3px);
+  }
+}
+
+.schedule-row-enter {
+  animation: scheduleRowEnter 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.schedule-scroll-nudge {
+  animation: scheduleScrollNudgeRtl 1.5s cubic-bezier(0.4, 0, 0.2, 1) 2;
+}
+
+.schedule-progress-fill {
+  transform-origin: right center;
+  transition: transform 140ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .responsive-table-scroll,
+  .responsive-table-scroll-dark {
+    scroll-behavior: auto;
+  }
+  .schedule-row-enter,
+  .schedule-scroll-nudge {
+    animation: none !important;
+  }
+  .schedule-progress-fill {
+    transition: none !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
